@@ -126,27 +126,27 @@
 		3. Install 区块：
 			`Alias=sshd.service`：就是别名的意思。
 
-     	- `multi-user.target` 配置文件:
-     	```bash
-     	# /lib/systemd/system/multi-user.target
-     	#  SPDX-License-Identifier: LGPL-2.1+
-     	#
-     	#  This file is part of systemd.
-     	#
-     	#  systemd is free software; you can redistribute it and/or modify it
-     	#  under the terms of the GNU Lesser General Public License as published by
-     	#  the Free Software Foundation; either version 2.1 of the License, or
-     	#  (at your option) any later version.
+  	- `multi-user.target` 配置文件:
+  	```bash
+  	# /lib/systemd/system/multi-user.target
+  	#  SPDX-License-Identifier: LGPL-2.1+
+  	#
+  	#  This file is part of systemd.
+  	#
+  	#  systemd is free software; you can redistribute it and/or modify it
+  	#  under the terms of the GNU Lesser General Public License as published by
+  	#  the Free Software Foundation; either version 2.1 of the License, or
+  	#  (at your option) any later version.
 
-     	[Unit]
-     	Description=Multi-User System
-     	Documentation=man:systemd.special(7)
-     	Requires=basic.target
-     	Conflicts=rescue.service rescue.target
-     	After=basic.target rescue.service rescue.target
-     	AllowIsolate=yes
-     	```
-     	博客中对这几个字段都有说明。
+	[Unit]
+	Description=Multi-User System
+	Documentation=man:systemd.special(7)
+	Requires=basic.target
+	Conflicts=rescue.service rescue.target
+	After=basic.target rescue.service rescue.target
+	AllowIsolate=yes
+	```
+	日志中对这几个字段都有说明。
 
 ## 4. 自查清单：
 ###  如何添加一个用户并使其具备sudo执行程序的权限？
@@ -271,91 +271,92 @@
 
 ![mountDir](./img/ShareResult.PNG)
 
-*可以看到文件夹变色*
+*可以看到共享文件夹被高亮*
 
 ### 基于LVM（逻辑分卷管理）的分区如何实现动态扩容和缩减容量？
 
 
 1. 动态缩减：`lvresize --size -{{SIZE}} --resizefs {{volume_group}}/{{logical_volume}}`。
-执行命令前lv状态：
-```bash
-  --- Logical volume ---
-  LV Path                /dev/demo-vg/demo-lv-2
-  LV Name                demo-lv-2
-  VG Name                demo-vg
-  LV UUID                AK9ePG-cDPz-Oe4C-hfJH-1DQY-mvB2-Di2phE
-  LV Write Access        read/write
-  LV Creation host, time demo-auto, 2021-04-02 22:56:00 +0800
-  LV Status              available
-  # open                 1
-  LV Size                13.98 GiB
-  Current LE             3579
-  Segments               4
-  Allocation             inherit
-  Read ahead sectors     auto
-  - currently set to     256
-  Block device           253:2
-```
-这里执行`lvresize --size -5G --resizefs  /dev/demo-vg/demo-lv-2`
-结果：
-```bash
-  LV Path                /dev/demo-vg/demo-lv-2
-  LV Name                demo-lv-2
-  VG Name                demo-vg
-  LV UUID                AK9ePG-cDPz-Oe4C-hfJH-1DQY-mvB2-Di2phE
-  LV Write Access        read/write
-  LV Creation host, time demo-auto, 2021-04-02 22:56:00 +0800
-  LV Status              available
-  # open                 1
-  LV Size                8.98 GiB
-  Current LE             2299
-  Segments               2
-  Allocation             inherit
-  Read ahead sectors     auto
-  - currently set to     256
-  Block device           253:22
-```
+
+	执行命令前用`sudo lvdisplay `查看lv状态：
+	```bash
+	--- Logical volume ---
+	LV Path                /dev/demo-vg/demo-lv-2
+	LV Name                demo-lv-2
+	VG Name                demo-vg
+	LV UUID                AK9ePG-cDPz-Oe4C-hfJH-1DQY-mvB2-Di2phE
+	LV Write Access        read/write
+	LV Creation host, time demo-auto, 2021-04-02 22:56:00 +0800
+	LV Status              available
+	# open                 1
+	LV Size                13.98 GiB
+	Current LE             3579
+	Segments               4
+	Allocation             inherit
+	Read ahead sectors     auto
+	- currently set to     256
+	Block device           253:2
+	```
+	这里执行`lvresize --size -5G --resizefs  /dev/demo-vg/demo-lv-2`
+	结果：
+	```bash
+	LV Path                /dev/demo-vg/demo-lv-2
+	LV Name                demo-lv-2
+	VG Name                demo-vg
+	LV UUID                AK9ePG-cDPz-Oe4C-hfJH-1DQY-mvB2-Di2phE
+	LV Write Access        read/write
+	LV Creation host, time demo-auto, 2021-04-02 22:56:00 +0800
+	LV Status              available
+	# open                 1
+	LV Size                8.98 GiB
+	Current LE             2299
+	Segments               2
+	Allocation             inherit
+	Read ahead sectors     auto
+	- currently set to     256
+	Block device           253:22
+	```
 2. 动态扩容：`lvresize --size +{{SIZE}} --resizefs {{volume_group}}/{{logical_volume}}`
 
-执行之前lv状态
-```bash
-  LV Path                /dev/demo-vg/demo-lv-2
-  LV Name                demo-lv-2
-  VG Name                demo-vg
-  LV UUID                AK9ePG-cDPz-Oe4C-hfJH-1DQY-mvB2-Di2phE
-  LV Write Access        read/write
-  LV Creation host, time demo-auto, 2021-04-02 22:56:00 +0800
-  LV Status              available
-  # open                 1
-  LV Size                8.98 GiB
-  Current LE             2299
-  Segments               2
-  Allocation             inherit
-  Read ahead sectors     auto
-  - currently set to     256
-  Block device           253:22
-```
+	执行之前lv状态
+	```bash
+	LV Path                /dev/demo-vg/demo-lv-2
+	LV Name                demo-lv-2
+	VG Name                demo-vg
+	LV UUID                AK9ePG-cDPz-Oe4C-hfJH-1DQY-mvB2-Di2phE
+	LV Write Access        read/write
+	LV Creation host, time demo-auto, 2021-04-02 22:56:00 +0800
+	LV Status              available
+	# open                 1
+	LV Size                8.98 GiB
+	Current LE             2299
+	Segments               2
+	Allocation             inherit
+	Read ahead sectors     auto
+	- currently set to     256
+	Block device           253:22
+	```
 
-这里输入命令：`lvresize --size +5G --resizefs  /dev/demo-vg/demo-lv-2`。因为加了5G又变回去了，或者输入`lvresize -l +100%FREE  /dev/demo-vg/demo-lv-2`把剩余可用空间加进去。
+	这里输入命令：`lvresize --size +5G --resizefs  /dev/demo-vg/demo-lv-2`。因为加了5G又变回去了，或者输入`lvresize -l +100%FREE  /dev/demo-vg/demo-lv-2`把剩余可用空间加进去。*在这里两者等价*
 
-执行结果：
-```bash
-  LV Path                /dev/demo-vg/demo-lv-2
-  LV Name                demo-lv-2
-  VG Name                demo-vg
-  LV UUID                AK9ePG-cDPz-Oe4C-hfJH-1DQY-mvB2-Di2phE
-  LV Write Access        read/write
-  LV Creation host, time demo-auto, 2021-04-02 22:56:00 +0800
-  LV Status              available
-  # open                 1
-  LV Size                13.98 GiB
-  Current LE             3579
-  Segments               4
-  Allocation             inherit
-  Read ahead sectors     auto
-  - currently set to     256
-  Block device           253:22
-```
+	执行结果：
+	```bash
+	LV Path                /dev/demo-vg/demo-lv-2
+	LV Name                demo-lv-2
+	VG Name                demo-vg
+	LV UUID                AK9ePG-cDPz-Oe4C-hfJH-1DQY-mvB2-Di2phE
+	LV Write Access        read/write
+	LV Creation host, time demo-auto, 2021-04-02 22:56:00 +0800
+	LV Status              available
+	# open                 1
+	LV Size                13.98 GiB
+	Current LE             3579
+	Segments               4
+	Allocation             inherit
+	Read ahead sectors     auto
+	- currently set to     256
+	Block device           253:22
+	```
 
 *可以对比看到 lv size 字段的变化*
 
