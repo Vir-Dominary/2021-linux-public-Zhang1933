@@ -146,7 +146,7 @@
 	After=basic.target rescue.service rescue.target
 	AllowIsolate=yes
 	```
-	日志中对这几个字段都有说明。
+	[日志](http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html)中对这几个字段都有说明。
 
 ## 4. 自查清单：
 ###  如何添加一个用户并使其具备sudo执行程序的权限？
@@ -256,7 +256,7 @@
 ](https://gist.github.com/estorgio/0c76e29c0439e683caca694f338d4003)中详细的操作说明实现的开机自动挂载。
 
 
-#### 这里主要说下遇到的问题与注意事项：
+#### 这里主要说下实验过程中遇到的问题与注意事项：
 
 * 在文中`Mount the shared folder from the host to your ~/shared directory`这一步输入命令：
 	```bash
@@ -266,6 +266,7 @@
 
 
 * 如果不熟悉`nano`。用vim修改配置文件保存再退出也可。 
+* *注意：在做这个之前记得快照*
 
 #### 挂载实验结果：
 
