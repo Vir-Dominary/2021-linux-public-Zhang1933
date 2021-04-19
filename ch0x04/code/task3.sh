@@ -20,7 +20,6 @@ EOF
 File="web_log.tsv"
 GetTop100Host(){
     printf "=====TOP 100 Host And Its Total Apperance=====\n"
-    = cnt=100
     awk -F '\t' '
     NR>1 {
         host[$1]++;
@@ -39,9 +38,6 @@ GetTop100Host(){
 GetTop100Ip(){
     printf "=====TOP 100 IP And Its Total Apperance=====\n"
     awk -F '\t' '
-    BEGIN{
-        = reg="[0-9]\{1,3\}[.][0-9]\{1,3\}[.][0-9]\{1,3\}[.][0-9]\{1,3\}";
-    } 
     NR>1{
         if($1~/([0-9]{1,3}\.){3}[0-9]{1,3}/){
             ip[$1]++; 
