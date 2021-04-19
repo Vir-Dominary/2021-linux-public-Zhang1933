@@ -18,7 +18,7 @@ EOF
 
 
 # 统计不同年龄区间范围（20岁以下、[20-30]、30岁以上）的球员数量、百分比
-File="worldcupplayerinfo.tsv"
+File="../data/worldcupplayerinfo.tsv"
 Age_range(){
     awk -F '\t' 'BEGIN{ le20=0;le30=0;gt30=0;}
     NR>1 {
