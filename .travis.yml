@@ -1,5 +1,4 @@
 language: bash
-dist: focal
 before_install:
     - cd ch0x04
     - cd code
