@@ -28,7 +28,7 @@ Avaliable options:
 
 Attention:
     By default,if the image format isn't be supported,the script will skips the
-    image file.
+    image file.And the result wiil be strored in the ImgOutPut dir.
 EOF
 }
 
@@ -39,7 +39,7 @@ prefix=""
 suffix=""
 if_convert=0
 dir=""
-
+out="ImgOutPut"
 # Jpg compress
 # input compress jpg path, output with JpgC_ prefix
 # convert filename1 -compress JPEG -quality 50 filename2 
@@ -49,7 +49,7 @@ JpgCompress(){
         if [[  ${i##*.} != "jpg" ]];then
             continue
         fi
-        (convert "$dir""/""$i" -compress JPEG -quality "$2" "$dir""/""JpgC_$i")
+        (convert "$dir""/""$i" -compress JPEG -quality "$2" "$out""/""JpgC_$i")
     done
     echo "Jpg quality  compress finish." 
 }
@@ -64,7 +64,7 @@ ResolutionCompress(){
     path=($1)
     for i in ${path[*]};do
         if [[  ${i##*.} == "jpg" ||  ${i##*.} == "svg" || ${i##*.} == "png" ]];then
-            convert "$dir""/""$i" -resize "$2%" "$dir""/""R_$i"
+            convert "$dir""/""$i" -resize "$2%" "$out""/""R_$i"
         fi
     done
     echo "resolution compress finish"
@@ -82,7 +82,7 @@ AddWaterMark(){
     path=($1)
     for i in ${path[*]};do
         if [[  ${i##*.} == "jpg" || ${i##*.} == "png" ]];then
-            convert "$dir/$i" -pointsize 50 -fill black -gravity center -draw "text 10,10 '$2' " "$dir/WM_$i"              
+            convert "$dir/$i" -pointsize 50 -fill black -gravity center -draw "text 10,10 '$2' " "$out/WM_$i"              
         fi
     done
     echo "Add watermark  finish"
@@ -98,7 +98,7 @@ PrefixAdd(){
     path=($1)
    for i in ${path[*]};do 
        if [[  ${i##*.} == "jpg" || ${i##*.} == "png" || ${i##*.} == "svg" ]];then
-          cp "$dir""/""$i" "$dir""/""$2$i"  
+          cp "$dir""/""$i" "$out""/""$2$i"  
        fi
    done
    echo "PrefixAdd finish"
@@ -114,7 +114,7 @@ SuffixAdd(){
     path=($1)
    for i in ${path[*]};do 
        if [[ ${#i} -ge 4 && ( ${i##*.} == "jpg" || ${i##*.} == "png" || ${i##*.} == "svg" ) ]];then
-           cp "$dir""/""$i" "$dir""/""${i::-4}$2${i:(-4)}"  
+           cp "$dir""/""$i" "$out""/""${i::-4}$2${i:(-4)}"  
        fi
    done
    echo "SuffixAdd finish"
@@ -130,7 +130,7 @@ ConverToJpeg(){
     for i in ${path[*]};do 
         # echo "$i"
         if [[ ${#i} -ge 4 && ( ${i##*.} == "png" || ${i##*.} == "svg" ) ]];then
-            convert "$dir/$i" "$dir/${i::-4}_${i:(-3):1}.jpg"  
+            convert "$dir/$i" "$out/${i::-4}_${i:(-3):1}.jpg"  
         fi
     done
     echo "Conver To Jpeg Finish"
