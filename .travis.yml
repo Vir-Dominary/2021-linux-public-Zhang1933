@@ -1,5 +1,5 @@
 language: bash
-
+dist: focal
 before_install:
     - cd ch0x04
     - cd code
@@ -7,7 +7,7 @@ before_install:
     - wget "https://c4pr1c3.github.io/LinuxSysAdmin/exp/chap0x04/web_log.tsv.7z"   
     - wget "https://c4pr1c3.github.io/LinuxSysAdmin/exp/chap0x04/worldcupplayerinfo.tsv"
     - sudo apt-get update && sudo apt-get install imagemagick
-    - sudo apt-get install ghostscript
+    # - sudo apt-get install ghostscript
     - sudo sudo apt-get install p7zip-full
     - 7z x  web_log.tsv.7z 
     - ls
