@@ -1,14 +1,14 @@
 language: bash
-branches:
-    only:
-    - ch0x04
 
 before_install:
+    - cd ch0x04
+    - cd code
+    - ls
     - wget "https://c4pr1c3.github.io/LinuxSysAdmin/exp/chap0x04/web_log.tsv.7z"   
     - wget "https://c4pr1c3.github.io/LinuxSysAdmin/exp/chap0x04/worldcupplayerinfo.tsv"
     - sudo apt-get update && sudo apt-get install imagemagick
     - sudo sudo apt-get install p7zip-full
-    - 7z x  web_log.tsv.7z
+    - 7z x  web_log.tsv.7z ch0x04/code
     - ls
 script:  
     - bash dataProcess.sh  -r -p -n -a     
