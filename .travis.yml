@@ -12,3 +12,7 @@ before_install:
     - ls
 script:  
     - bash dataProcess.sh  -r -p -n -a     
+    - bash task3.sh -h -o -p -m -c -f -u "/pub/winvn/readme.txt"
+    - mkdir ImgOutPut 
+    - bash  imageP.sh  ../data -q 50 -r 50 -w "hello" -p "pre" -s "suf" -c
+    - cat log.txt
