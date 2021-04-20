@@ -1,4 +1,7 @@
 language: bash
+env:
+   global:
+    - GH_REPO="github.com/CUCCS/2021-linux-public-${USER}.git"
 before_install:
     - cd ch0x04
     - cd code
@@ -18,3 +21,11 @@ script:
     - bash  imageP.sh  ../data -q 50 -r 50 -w "hello" -p "pre" -s "suf" -c
     - ls ImgOutPut
     - cat log.txt
+after_success:
+    - ls
+    - git config user.email ${EMAIL}
+    - git config user.name ${USER}
+    - git switch img
+    - git add ImgOutPut
+    - git commit -m"Travis outpt:${TRAVIS_BUILD_NUMBER}"
+    - git push --force --quiet "https://${GH_TOKEN}@${GH_REPO}" HEAD:img
