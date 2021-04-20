@@ -29,7 +29,7 @@ after_success:
     - pwd
     - git config user.email ${EMAIL}
     - git config user.name ${USER}
-    - git checkout --orphan 0x04ImgOutPut
+    - git checkout --orphan 0x04img
     - giet status
     - git rm --cached -r .
     - git status
