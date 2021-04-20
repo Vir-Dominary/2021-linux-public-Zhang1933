@@ -1,4 +1,7 @@
 language: bash
+branch:
+   except:
+    - img
 env:
    global:
     - GH_REPO="github.com/CUCCS/2021-linux-public-${USER}.git"
@@ -27,5 +30,5 @@ after_success:
     - git config user.name ${USER}
     - git switch img
     - git add ImgOutPut
-    - git commit -m"Travis outpt:${TRAVIS_BUILD_NUMBER}"
+    - git commit -m"Travis outpt commit:${TRAVIS_BUILD_NUMBER}"
     - git push --force --quiet "https://${GH_TOKEN}@${GH_REPO}" HEAD:img
