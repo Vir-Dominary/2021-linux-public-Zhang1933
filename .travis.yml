@@ -26,9 +26,10 @@ script:
     - ls ImgOutPut
     - cat log.txt
 after_success:
-    - ls
+    - find
     - git config user.email ${EMAIL}
     - git config user.name ${USER}
+    - mv ImgOutPut ..
     - git switch img
     - git add ImgOutPut
     - git commit -m"Travis outpt commit:${TRAVIS_BUILD_NUMBER}"
