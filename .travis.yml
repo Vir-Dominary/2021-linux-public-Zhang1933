@@ -2,6 +2,7 @@ language: bash
 branch:
    except:
     - img
+    - master
 env:
    global:
     - GH_REPO="github.com/CUCCS/2021-linux-public-${USER}.git"
