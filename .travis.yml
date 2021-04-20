@@ -30,10 +30,11 @@ after_success:
     - git config user.email ${EMAIL}
     - git config user.name ${USER}
     - git checkout --orphan 0x04img
+    - mv ImgOutPut ../..
+    - cd ../..
     - git status
     - git rm -r --cached  .
     - git status
-    - git add ImgOutPut
     - git commit -m"Travis outpt commit:${TRAVIS_BUILD_NUMBER}"
     - git push --force --quiet "https://${GH_TOKEN}@${GH_REPO}" HEAD:0x04img 
 
